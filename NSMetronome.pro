@@ -35,3 +35,6 @@ FORMS += \
 
 RESOURCES += \
     builtinsounds.qrc
+
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += portaudio-2.0
