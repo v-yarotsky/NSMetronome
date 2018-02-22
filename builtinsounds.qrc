@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>sounds/Metronome.wav</file>
+        <file>sounds/MetronomeUp.wav</file>
+    </qresource>
+</RCC>
