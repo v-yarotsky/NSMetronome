@@ -8,6 +8,8 @@ int PaCallback(const void *input, void *output, unsigned long frameCount, const 
 
     MetronomeState *state = (MetronomeState *)userData;
     float *out = (float*)output;
+    int64_t framesPerBeat = state->sampleRate * 60 / state->tempo;
+
     for (uint i = 0; i < frameCount; i++) {
         if (state->pos < state->framesCount) {
             *out++ = state->samples[state->pos];
@@ -17,7 +19,7 @@ int PaCallback(const void *input, void *output, unsigned long frameCount, const 
             *out++ = 0.0;
         }
         state->pos++;
-        if (state->pos > state->framesPerBeat) {
+        if (state->pos > framesPerBeat) {
             state->pos = 0;
         }
     }
@@ -41,7 +43,7 @@ MetronomeWindow::MetronomeWindow(QWidget *parent) :
     sf_close(f);
     //mFile.close();
 
-    this->state = new MetronomeState { i.samplerate * 60 / 60, i.frames, samples, 0 };
+    this->state = new MetronomeState { 80, i.samplerate, i.frames, samples, 0 };
 
     PaError err = Pa_Initialize();
     if (err != paNoError) {
@@ -54,13 +56,6 @@ MetronomeWindow::MetronomeWindow(QWidget *parent) :
     }
 
     ui->setupUi(this);
-
-    err = Pa_StartStream(this->stream);
-    if (err != paNoError) {
-        printf("well shit, failed to start stream: %s\n", Pa_GetErrorText(err));
-    } else {
-        printf("started stream\n");
-    }
 }
 
 MetronomeWindow::~MetronomeWindow()
@@ -88,9 +83,10 @@ void MetronomeWindow::startStopMetronome(bool start) {
         } else {
             printf("started stream\n");
         }
+        this->state->pos = 0;
     }
 }
 
 void MetronomeWindow::changeTempo(int newTempo) {
-
+    this->state->tempo = newTempo;
 }

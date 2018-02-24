@@ -11,7 +11,8 @@ class MetronomeWindow;
 }
 
 struct MetronomeState {
-  int64_t framesPerBeat;
+  uint tempo;
+  int64_t sampleRate;
   int64_t framesCount;
   float *samples;
   int pos;

@@ -50,6 +50,9 @@
       <property name="text">
        <string>Start</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
    </layout>
@@ -65,12 +68,12 @@
    <slot>startStopMetronome(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>82</x>
-     <y>60</y>
+     <x>86</x>
+     <y>63</y>
     </hint>
     <hint type="destinationlabel">
-     <x>60</x>
-     <y>487</y>
+     <x>86</x>
+     <y>41</y>
     </hint>
    </hints>
   </connection>
@@ -81,12 +84,12 @@
    <slot>changeTempo(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>127</x>
-     <y>22</y>
+     <x>117</x>
+     <y>24</y>
     </hint>
     <hint type="destinationlabel">
-     <x>190</x>
-     <y>484</y>
+     <x>86</x>
+     <y>41</y>
     </hint>
    </hints>
   </connection>
