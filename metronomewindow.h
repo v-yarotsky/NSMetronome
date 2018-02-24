@@ -2,10 +2,20 @@
 #define METRONOMEWINDOW_H
 
 #include <QMainWindow>
+#include <QFile>
+#include "portaudio.h"
+#include "sndfile.h"
 
 namespace Ui {
 class MetronomeWindow;
 }
+
+struct MetronomeState {
+  int64_t framesPerBeat;
+  int64_t framesCount;
+  float *samples;
+  int pos;
+};
 
 class MetronomeWindow : public QMainWindow
 {
@@ -21,6 +31,8 @@ public slots:
 
 private:
     Ui::MetronomeWindow *ui;
+    PaStream *stream;
+    MetronomeState *state;
 };
 
 #endif // METRONOMEWINDOW_H

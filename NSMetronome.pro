@@ -33,8 +33,15 @@ HEADERS += \
 FORMS += \
         metronomewindow.ui
 
-RESOURCES += \
-    builtinsounds.qrc
+RESOURCES +=
 
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += portaudio-2.0
+
+unix: PKGCONFIG += sndfile
+
+mac{
+    MediaFiles.files = sounds
+    MediaFiles.path = Contents/MacOS
+    QMAKE_BUNDLE_DATA += MediaFiles
+}
