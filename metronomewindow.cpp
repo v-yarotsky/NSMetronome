@@ -1,12 +1,16 @@
 #include "metronomewindow.h"
 #include "ui_metronomewindow.h"
+#include <string>
 
 MetronomeWindow::MetronomeWindow(QString rcRoot, QWidget *parent) :
     QMainWindow(parent),
     m_rcRoot(rcRoot),
     ui(new Ui::MetronomeWindow)
 {
-    m_metronome = new Metronome((m_rcRoot + "/sounds/Metronome.wav").toUtf8().constData());
+    std::string samplePath = (m_rcRoot + "/sounds/Metronome.wav").toUtf8().constData();
+    std::string accentSamplePath = (m_rcRoot + "/sounds/MetronomeUp.wav").toUtf8().constData();
+
+    m_metronome = new Metronome(samplePath, accentSamplePath);
 
     ui->setupUi(this);
     ui->btnQuarterth->setBeatsPerBar(4);

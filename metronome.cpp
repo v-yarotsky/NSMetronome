@@ -1,6 +1,7 @@
 #include "metronome.h"
 #include "portaudio.h"
 #include "sndfile.h"
+#include <stdexcept>
 #include <QDebug>
 
 int PaCallback(const void *input, void *output, unsigned long frameCount, const PaStreamCallbackTimeInfo *timeInfo, PaStreamCallbackFlags statusFlags, void *userData) {
@@ -10,46 +11,68 @@ int PaCallback(const void *input, void *output, unsigned long frameCount, const 
 
     MetronomeState *state = (MetronomeState *)userData;
     float *out = (float*)output;
-    long long framesPerBeat = state->sampleRate * 60 * 4 / state->tempo / state->beatsPerBar;
+
+    long long framesPerBeat = SAMPLE_RATE * 60 * 4 / state->tempo / state->beatsPerBar;
+    const Sample *sample;
 
     for (unsigned long i = 0; i < frameCount; i++) {
-        if (state->pos < state->framesCount) {
-            *out++ = state->samples[state->pos];
-            *out++ = state->samples[state->pos];
+        sample = state->barBeatNumber == 0 ? state->accentSample : state->sample;
+        if (state->pos < sample->framesCount) {
+            *out++ = sample->frames[state->pos];
+            *out++ = sample->frames[state->pos];
         } else {
             *out++ = 0.0;
             *out++ = 0.0;
+
+            // To change subdivision while playing, we wait for the currently playing sample to end,
+            // and then reset the beat playhead and start on an accent.
+            if (state->resetting) {
+                state->resetting = false;
+                state->barBeatNumber = 0;
+                state->pos = 0;
+                continue;
+            };
         }
         state->pos++;
         if (state->pos > framesPerBeat) {
+            state->barBeatNumber = (state->barBeatNumber + 1 ) % state->beatsPerBar;
             state->pos = 0;
         }
     }
     return 0;
 }
 
-Metronome::Metronome(const char *samplePath)
+Metronome::Metronome(std::string samplePath, std::string accentSamplePath)
 {
-    SF_INFO i;
-    SNDFILE *f = sf_open(samplePath, SFM_READ, &i);
-    if (f == NULL) {
-        qDebug() << "error reading sample:" << sf_strerror(NULL);
-    }
-    float *samples = (float *)malloc(sizeof(float) * i.frames);
-    sf_readf_float(f, samples, i.frames);
-    sf_close(f);
+    const Sample *sample = loadSample(samplePath);
+    const Sample *accentSample = loadSample(accentSamplePath);
 
-    this->state = new MetronomeState { 80, 4, i.samplerate, i.frames, samples, 0 };
+    this->state = new MetronomeState { 80, 4, 0, sample, accentSample, 0, false };
 
     PaError err = Pa_Initialize();
     if (err != paNoError) {
         qDebug() << "well shit, failed to initialize portaudio:" << Pa_GetErrorText(err);
     }
 
-    err = Pa_OpenDefaultStream(&this->stream, 0, 2, paFloat32, 44100, 256, PaCallback, this->state);
+    err = Pa_OpenDefaultStream(&this->stream, 0, 2, paFloat32, SAMPLE_RATE, 256, PaCallback, this->state);
     if (err != paNoError) {
         qDebug() << "well shit, failed to open audio stream:" << Pa_GetErrorText(err);
     }
+}
+
+const Sample * Metronome::loadSample(std::string path) {
+    SF_INFO i;
+    SNDFILE *f = sf_open(path.c_str(), SFM_READ, &i);
+    if (f == NULL) {
+        qDebug() << "error reading sample" << path.c_str() << ": " << sf_strerror(NULL);
+    }
+    float *frames = (float *)malloc(sizeof(float) * i.frames);
+    sf_readf_float(f, frames, i.frames);
+    sf_close(f);
+    if (i.samplerate != SAMPLE_RATE) {
+        throw std::invalid_argument("Unsupported sample rate for sample");
+    }
+    return new Sample { i.frames, frames };
 }
 
 Metronome::~Metronome() {
@@ -91,5 +114,6 @@ uint Metronome::beatsPerBar() {
 }
 
 void Metronome::setBeatsPerBar(uint newBeatsPerBar) {
+    this->state->resetting = true;
     this->state->beatsPerBar = newBeatsPerBar;
 }

@@ -2,19 +2,28 @@
 #define METRONOME_H
 
 #include "portaudio.h"
+#include <string>
+
+const int SAMPLE_RATE = 44100;
+
+struct Sample {
+  long long framesCount;
+  float *frames;
+};
 
 struct MetronomeState {
   unsigned int tempo;
   unsigned int beatsPerBar;
-  int sampleRate;
-  long long framesCount;
-  float *samples;
+  unsigned int barBeatNumber;
+  const Sample *sample;
+  const Sample *accentSample;
   long long pos;
+  bool resetting;
 };
 
 class Metronome {
 public:
-    Metronome(const char *samplePath);
+    Metronome(std::string samplePath, std::string accentSamplePath);
     ~Metronome();
 
     unsigned int tempo();
@@ -29,6 +38,8 @@ public:
 private:
     PaStream *stream;
     MetronomeState *state;
+
+    const Sample * loadSample(std::string path);
 };
 
 #endif // METRONOME_H
