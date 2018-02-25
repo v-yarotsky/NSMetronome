@@ -10,7 +10,7 @@ int PaCallback(const void *input, void *output, unsigned long frameCount, const 
 
     MetronomeState *state = (MetronomeState *)userData;
     float *out = (float*)output;
-    long long framesPerBeat = state->sampleRate * 60 / state->tempo / (state->beatsPerBar / 4);
+    long long framesPerBeat = state->sampleRate * 60 * 4 / state->tempo / state->beatsPerBar;
 
     for (unsigned long i = 0; i < frameCount; i++) {
         if (state->pos < state->framesCount) {
