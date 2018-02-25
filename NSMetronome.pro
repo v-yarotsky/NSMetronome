@@ -28,7 +28,8 @@ SOURCES += \
         metronomewindow.cpp
 
 HEADERS += \
-        metronomewindow.h
+        metronomewindow.h \
+    qsubdivisionbutton.h
 
 FORMS += \
         metronomewindow.ui
@@ -44,4 +45,6 @@ mac{
     MediaFiles.files = sounds
     MediaFiles.path = Contents/MacOS
     QMAKE_BUNDLE_DATA += MediaFiles
+
+    ICON = NSMetronome.icns
 }
