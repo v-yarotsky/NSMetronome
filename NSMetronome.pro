@@ -25,11 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        metronomewindow.cpp
+        metronomewindow.cpp \
+    metronome.cpp
 
 HEADERS += \
         metronomewindow.h \
-    qsubdivisionbutton.h
+    qsubdivisionbutton.h \
+    metronome.h
 
 FORMS += \
         metronomewindow.ui

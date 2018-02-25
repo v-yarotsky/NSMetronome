@@ -2,21 +2,12 @@
 #define METRONOMEWINDOW_H
 
 #include <QMainWindow>
-#include "portaudio.h"
+#include "metronome.h"
 #include "qsubdivisionbutton.h"
 
 namespace Ui {
 class MetronomeWindow;
 }
-
-struct MetronomeState {
-  uint tempo;
-  uint beatsPerBar;
-  int64_t sampleRate;
-  int64_t framesCount;
-  float *samples;
-  int pos;
-};
 
 class MetronomeWindow : public QMainWindow
 {
@@ -34,8 +25,7 @@ public slots:
 private:
     QString m_rcRoot;
     Ui::MetronomeWindow *ui;
-    PaStream *stream;
-    MetronomeState *state;
+    Metronome *m_metronome;
 };
 
 #endif // METRONOMEWINDOW_H
