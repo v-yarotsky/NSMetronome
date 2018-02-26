@@ -3,6 +3,8 @@
 
 #include "portaudio.h"
 #include <string>
+#include <list>
+#include <chrono>
 
 const int SAMPLE_RATE = 44100;
 
@@ -34,10 +36,12 @@ public:
 
     void start();
     void stop();
+    void tapTempo();
 
 private:
     PaStream *stream;
     MetronomeState *state;
+    std::list<std::chrono::system_clock::time_point> m_tapTempoTimestamps;
 
     const Sample * loadSample(std::string path);
 };

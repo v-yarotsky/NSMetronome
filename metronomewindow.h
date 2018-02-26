@@ -21,6 +21,7 @@ public slots:
     void startStopMetronome(bool start);
     void changeTempo(int newTempo);
     void chooseSubdivision(QAbstractButton *btn, bool toggled);
+    void tapTempo();
 
 private:
     QString m_rcRoot;

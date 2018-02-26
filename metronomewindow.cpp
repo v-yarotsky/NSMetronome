@@ -61,3 +61,8 @@ void MetronomeWindow::chooseSubdivision(QAbstractButton *btn, bool toggled) {
     QSubdivisionButton *b = qobject_cast<QSubdivisionButton *>(btn);
     m_metronome->setBeatsPerBar(b->beatsPerBar());
 }
+
+void MetronomeWindow::tapTempo() {
+    m_metronome->tapTempo();
+    ui->bpmSpinBox->setValue(m_metronome->tempo());
+}

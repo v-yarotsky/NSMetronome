@@ -88,6 +88,9 @@ void Metronome::start() {
         qDebug() << "well shit, failed to start stream:" << Pa_GetErrorText(err);
     } else {
         qDebug() << "started stream";
+        this->state->barBeatNumber = 0;
+        this->state->pos = 0;
+        this->state->resetting = false;
     }
 }
 
@@ -97,7 +100,6 @@ void Metronome::stop() {
         qDebug() << "well shit, failed to stop stream:" << Pa_GetErrorText(err);
     } else {
         qDebug() << "stopped stream";
-        this->state->pos = 0;
     }
 }
 
@@ -116,4 +118,26 @@ uint Metronome::beatsPerBar() {
 void Metronome::setBeatsPerBar(uint newBeatsPerBar) {
     this->state->resetting = true;
     this->state->beatsPerBar = newBeatsPerBar;
+}
+
+// Call this 4 times to set tempo
+void Metronome::tapTempo() {
+    auto now = std::chrono::system_clock::now();
+    if (!m_tapTempoTimestamps.empty()) {
+        auto latest = m_tapTempoTimestamps.front();
+        if ((now - std::chrono::seconds(3)) > latest) { // clear out tap tempo buffer if the most
+            m_tapTempoTimestamps.clear();               // recent tap was more than 3 seconds ago
+        }
+    }
+    m_tapTempoTimestamps.push_front(now);
+    if (m_tapTempoTimestamps.size() > 4) {
+        m_tapTempoTimestamps.pop_back();
+    }
+    if (m_tapTempoTimestamps.size() == 4) {
+        auto intervalBetweenFirstAndLastTap = m_tapTempoTimestamps.front() - m_tapTempoTimestamps.back();
+        unsigned long averageInterval =
+                std::chrono::duration_cast<std::chrono::milliseconds>(intervalBetweenFirstAndLastTap).count() / 3;
+        unsigned int newTempo = 60000 / averageInterval;
+        setTempo(newTempo);
+    }
 }
