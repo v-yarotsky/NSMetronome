@@ -3,4 +3,4 @@ NSMetronome
 
 A simple metronome app for macOS.
 
-![screen shot](https://user-images.githubusercontent.com/472161/36660613-a8ee6486-1a8d-11e8-977c-f6f1e2090d22.png)
+![screen shot](https://user-images.githubusercontent.com/472161/37562230-c255b792-2a20-11e8-8ee0-38ad6f4b1fd4.png)
