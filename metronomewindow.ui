@@ -188,6 +188,8 @@
   <tabstop>btnStartStop</tabstop>
   <tabstop>bpmSpinBox</tabstop>
   <tabstop>btnTapTempo</tabstop>
+  <tabstop>btnHalfTempo</tabstop>
+  <tabstop>btnDoubleTempo</tabstop>
   <tabstop>btnQuarterth</tabstop>
   <tabstop>btnQuarterthTriplets</tabstop>
   <tabstop>btnEighth</tabstop>
@@ -197,22 +199,6 @@
  </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>btnStartStop</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>MetronomeWindow</receiver>
-   <slot>startStopMetronome(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>98</x>
-     <y>155</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>86</x>
-     <y>41</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>bpmSpinBox</sender>
    <signal>valueChanged(int)</signal>
@@ -306,6 +292,22 @@
     <hint type="destinationlabel">
      <x>276</x>
      <y>881</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStartStop</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MetronomeWindow</receiver>
+   <slot>startStopMetronome(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>98</x>
+     <y>155</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>86</x>
+     <y>41</y>
     </hint>
    </hints>
   </connection>
