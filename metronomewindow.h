@@ -22,6 +22,11 @@ public slots:
     void changeTempo(int newTempo);
     void chooseSubdivision(QAbstractButton *btn, bool toggled);
     void tapTempo();
+    void halfTempo();
+    void doubleTempo();
+
+signals:
+    void tempoChanged(int newTempo);
 
 private:
     QString m_rcRoot;

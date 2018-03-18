@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>241</width>
-    <height>160</height>
+    <width>330</width>
+    <height>172</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Not Shit Metronome</string>
+   <string>NSMetronome</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -32,15 +32,6 @@
         <property name="suffix">
          <string> bpm</string>
         </property>
-        <property name="minimum">
-         <number>20</number>
-        </property>
-        <property name="maximum">
-         <number>350</number>
-        </property>
-        <property name="value">
-         <number>80</number>
-        </property>
        </widget>
       </item>
       <item>
@@ -53,87 +44,122 @@
      </layout>
     </item>
     <item>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QSubdivisionButton" name="btnQuarterth">
-        <property name="text">
-         <string>1/4</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-        <attribute name="buttonGroup">
-         <string notr="true">bgDivisions</string>
-        </attribute>
-       </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QSubdivisionButton" name="btnQuarterth">
+          <property name="text">
+           <string>1/4</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">bgDivisions</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSubdivisionButton" name="btnEighth">
+          <property name="text">
+           <string>1/8</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">bgDivisions</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QSubdivisionButton" name="btnSixteenth">
+          <property name="text">
+           <string>1/16</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">bgDivisions</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSubdivisionButton" name="btnEighthTriplets">
+          <property name="text">
+           <string>1/8T</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">bgDivisions</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QSubdivisionButton" name="btnSixteenthTriplets">
+          <property name="text">
+           <string>1/16T</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">bgDivisions</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QSubdivisionButton" name="btnQuarterthTriplets">
+          <property name="text">
+           <string>1/4T</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">bgDivisions</string>
+          </attribute>
+         </widget>
+        </item>
+       </layout>
       </item>
-      <item row="0" column="1">
-       <widget class="QSubdivisionButton" name="btnEighth">
-        <property name="text">
-         <string>1/8</string>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
-        <property name="checkable">
-         <bool>true</bool>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
         </property>
-        <attribute name="buttonGroup">
-         <string notr="true">bgDivisions</string>
-        </attribute>
-       </widget>
+       </spacer>
       </item>
-      <item row="0" column="2">
-       <widget class="QSubdivisionButton" name="btnSixteenth">
-        <property name="text">
-         <string>1/16</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <attribute name="buttonGroup">
-         <string notr="true">bgDivisions</string>
-        </attribute>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QSubdivisionButton" name="btnEighthTriplets">
-        <property name="text">
-         <string>1/8T</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <attribute name="buttonGroup">
-         <string notr="true">bgDivisions</string>
-        </attribute>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QSubdivisionButton" name="btnSixteenthTriplets">
-        <property name="text">
-         <string>1/16T</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <attribute name="buttonGroup">
-         <string notr="true">bgDivisions</string>
-        </attribute>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QSubdivisionButton" name="btnQuarterthTriplets">
-        <property name="text">
-         <string>1/4T</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <attribute name="buttonGroup">
-         <string notr="true">bgDivisions</string>
-        </attribute>
-       </widget>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QPushButton" name="btnHalfTempo">
+          <property name="text">
+           <string>½x</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnDoubleTempo">
+          <property name="text">
+           <string>2x</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
@@ -226,21 +252,72 @@
    <slot>tapTempo()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>198</x>
-     <y>31</y>
+     <x>317</x>
+     <y>45</y>
     </hint>
     <hint type="destinationlabel">
      <x>147</x>
-     <y>877</y>
+     <y>171</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>MetronomeWindow</sender>
+   <signal>tempoChanged(int)</signal>
+   <receiver>bpmSpinBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>329</x>
+     <y>117</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>159</x>
+     <y>27</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnHalfTempo</sender>
+   <signal>clicked()</signal>
+   <receiver>MetronomeWindow</receiver>
+   <slot>halfTempo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>290</x>
+     <y>74</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>164</x>
+     <y>911</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDoubleTempo</sender>
+   <signal>clicked()</signal>
+   <receiver>MetronomeWindow</receiver>
+   <slot>doubleTempo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>107</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>276</x>
+     <y>881</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
+  <signal>tempoChanged(int)</signal>
   <slot>startStopMetronome(bool)</slot>
   <slot>changeTempo(int)</slot>
   <slot>chooseSubdivision(QAbstractButton*,bool)</slot>
   <slot>tapTempo()</slot>
+  <slot>halfTempo()</slot>
+  <slot>doubleTempo()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="bgDivisions"/>

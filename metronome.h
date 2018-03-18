@@ -23,6 +23,9 @@ struct MetronomeState {
   bool resetting;
 };
 
+const int MIN_TEMPO = 20;
+const int MAX_TEMPO = 350;
+
 class Metronome {
 public:
     Metronome(std::string samplePath, std::string accentSamplePath);

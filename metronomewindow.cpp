@@ -30,6 +30,8 @@ MetronomeWindow::MetronomeWindow(QString rcRoot, QWidget *parent) :
     }
 
     ui->bpmSpinBox->setValue(m_metronome->tempo());
+    ui->bpmSpinBox->setMinimum(MIN_TEMPO);
+    ui->bpmSpinBox->setMaximum(MAX_TEMPO);
 }
 
 MetronomeWindow::~MetronomeWindow()
@@ -51,7 +53,16 @@ void MetronomeWindow::startStopMetronome(bool start) {
 }
 
 void MetronomeWindow::changeTempo(int newTempo) {
-    m_metronome->setTempo(newTempo);
+    if (newTempo < MIN_TEMPO) {
+        newTempo = MIN_TEMPO;
+    } else if (newTempo > MAX_TEMPO) {
+        newTempo = MAX_TEMPO;
+    }
+
+    if (m_metronome->tempo() != newTempo) {
+        m_metronome->setTempo(newTempo);
+        emit tempoChanged(newTempo);
+    }
 }
 
 void MetronomeWindow::chooseSubdivision(QAbstractButton *btn, bool toggled) {
@@ -65,4 +76,14 @@ void MetronomeWindow::chooseSubdivision(QAbstractButton *btn, bool toggled) {
 void MetronomeWindow::tapTempo() {
     m_metronome->tapTempo();
     ui->bpmSpinBox->setValue(m_metronome->tempo());
+}
+
+void MetronomeWindow::halfTempo() {
+    auto currentTempo = m_metronome->tempo();
+    changeTempo(currentTempo / 2);
+}
+
+void MetronomeWindow::doubleTempo() {
+    auto currentTempo = m_metronome->tempo();
+    changeTempo(currentTempo * 2);
 }
